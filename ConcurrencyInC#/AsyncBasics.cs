@@ -15,4 +15,16 @@ public class AsyncBasics
         }
         return await downloadTask;
     }
+
+    public async Task ReportProgress(IProgress<double> progressReporter)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            await Task.Delay(100);
+            progressReporter.Report(i);
+        }
+    }
+
+
+
 }
