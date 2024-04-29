@@ -1,12 +1,13 @@
 ﻿namespace ConcurrencyInC_;
 
-public class Cancellation
+public static class Cancellation
 {
     public static async Task Runner()
     {
         //CancelTask();
         //await IssueCancellationRequest();
-        await CancelAfterTimeout();
+        //await CancelAfterTimeout();
+        await CallWaitUntilCompletionOrCancellation();
     }
 
     private static void CancelTask()
@@ -92,7 +93,7 @@ public class Cancellation
 
         try
         {
-            cts.CancelAfter(TimeSpan.FromSeconds(1));
+            
             // this task will be cancelled after 3 seconds
             await CancellableTask(cts.Token);
             Console.WriteLine("Task finished");
@@ -103,7 +104,7 @@ public class Cancellation
         }
     }
 
-    private async Task<HttpResponseMessage> LinkCancellationTokens(HttpClient client, string url, CancellationToken cancellationToken)
+    private static async Task<HttpResponseMessage> LinkCancellationTokens(HttpClient client, string url, CancellationToken cancellationToken)
     {
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         cts.CancelAfter(TimeSpan.FromSeconds(2));
@@ -111,5 +112,37 @@ public class Cancellation
 
         return await client.GetAsync(url, combinedToken);
 
+    }
+
+    private static async Task CallWaitUntilCompletionOrCancellation()
+    {
+        var cts = new CancellationTokenSource();
+
+        try
+        {
+
+            cts.CancelAfter(TimeSpan.FromSeconds(3));
+
+            var task =  CancellableTask(cts.Token);
+
+            await task.WaitUntilCompletionOrCancellation(cts.Token);
+
+            Console.WriteLine("Task finished");
+        }
+        catch (OperationCanceledException)
+        {
+            Console.WriteLine("Task was cancelled");
+        }
+
+    }
+
+    public static async Task WaitUntilCompletionOrCancellation(this Task asyncOp, CancellationToken cancellationToken)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        await using (cancellationToken.Register(() => tcs.TrySetCanceled()))
+        {
+           await Task.WhenAny(asyncOp, tcs.Task);
+           cancellationToken.ThrowIfCancellationRequested();
+        }
     }
 }

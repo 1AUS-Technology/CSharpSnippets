@@ -1,4 +1,6 @@
-﻿namespace ConcurrencyInC_;
+﻿using ConcurrencyInC_.Threading;
+
+namespace ConcurrencyInC_;
 
 internal class Program
 {
@@ -8,7 +10,9 @@ internal class Program
         //ReactiveBasics.Runner();
         //await UseCollections.Runner();
 
-        await Cancellation.Runner();
+        //await Cancellation.Runner();
+
+        UsingCountdownEvent.Runner();
 
         Console.ReadLine();
     }
