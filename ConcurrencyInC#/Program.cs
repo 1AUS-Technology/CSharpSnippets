@@ -1,4 +1,5 @@
 ﻿using ConcurrencyInC_.Threading;
+using ConcurrencyInC_.Threading.UsingReaderWriterLockSlim;
 
 namespace ConcurrencyInC_;
 
@@ -12,7 +13,8 @@ internal class Program
 
         //await Cancellation.Runner();
 
-        UsingCountdownEvent.Runner();
+        //UsingCountdownEvent.Runner();
+        UsingLockProvider.Run();
 
         Console.ReadLine();
     }
