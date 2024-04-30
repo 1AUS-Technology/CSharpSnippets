@@ -16,7 +16,10 @@ internal class Program
 
         //UsingCountdownEvent.Runner();
         //UsingLockProvider.Run();
-        await SynchronisationRunner.Run();
+        //await SynchronisationRunner.Run();
+        //await UsingAsyncStream.Run();
+
+        UsingSemaphore.Run();
 
         Console.ReadLine();
     }
