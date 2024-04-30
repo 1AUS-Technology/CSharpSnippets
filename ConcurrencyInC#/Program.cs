@@ -1,6 +1,7 @@
 ﻿using ConcurrencyInC_.Synchronisation;
 using ConcurrencyInC_.Threading;
 using ConcurrencyInC_.Threading.UsingReaderWriterLockSlim;
+using ConcurrencyInC_.Threading.UsingTimers;
 
 namespace ConcurrencyInC_;
 
@@ -21,7 +22,10 @@ internal class Program
 
         //UsingSemaphore.Run();
 
-        UsingAutoResetEvent.Run();
+        //UsingAutoResetEvent.Run();
+
+        //UsingBarrier.Run();
+        await UsingPeriodicTimer.Run();
 
 
         Console.ReadLine();
