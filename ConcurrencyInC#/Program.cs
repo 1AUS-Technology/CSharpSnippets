@@ -19,7 +19,10 @@ internal class Program
         //await SynchronisationRunner.Run();
         //await UsingAsyncStream.Run();
 
-        UsingSemaphore.Run();
+        //UsingSemaphore.Run();
+
+        UsingAutoResetEvent.Run();
+
 
         Console.ReadLine();
     }
