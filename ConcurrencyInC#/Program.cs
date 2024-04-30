@@ -1,4 +1,5 @@
-﻿using ConcurrencyInC_.Threading;
+﻿using ConcurrencyInC_.Synchronisation;
+using ConcurrencyInC_.Threading;
 using ConcurrencyInC_.Threading.UsingReaderWriterLockSlim;
 
 namespace ConcurrencyInC_;
@@ -14,7 +15,8 @@ internal class Program
         //await Cancellation.Runner();
 
         //UsingCountdownEvent.Runner();
-        UsingLockProvider.Run();
+        //UsingLockProvider.Run();
+        await SynchronisationRunner.Run();
 
         Console.ReadLine();
     }

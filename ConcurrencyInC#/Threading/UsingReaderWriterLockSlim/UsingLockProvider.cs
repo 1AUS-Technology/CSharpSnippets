@@ -4,13 +4,13 @@ public class UsingLockProvider
 {
     public static void Run()
     {
-        var lockProvider = new LockProvider();
+        var lockProvider = new AsyncLockProvider();
 
         Task.Run(async () =>
         {
             await Task.Delay(1000);
             Console.WriteLine("Task 1 requests reader lock");
-            using (await lockProvider.RequestReaderLockAsync())
+            using (await lockProvider.RequestScheduleReaderLockAsync())
             {
 
                 Console.WriteLine("Task 1 acquires reader lock. Now do work");
@@ -26,7 +26,7 @@ public class UsingLockProvider
         {
             await Task.Delay(1000);
             Console.WriteLine("Task 2 requests reader lock");
-            using (await lockProvider.RequestReaderLockAsync())
+            using (await lockProvider.RequestScheduleReaderLockAsync())
             {
                 Console.WriteLine("Task 2 acquires reader lock. Now do work");
 
@@ -41,7 +41,7 @@ public class UsingLockProvider
         {
             await Task.Delay(1500);
             Console.WriteLine("Task 3 requests writer lock");
-            using (await lockProvider.RequestWriterLockAsync())
+            using (await lockProvider.RequestScheduleWriterLockAsync())
             {
                 Console.WriteLine("Task 3 acquires writer lock. Now do work");
 
