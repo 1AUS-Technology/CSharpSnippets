@@ -10,7 +10,7 @@ public class PersonBuilder
 
     protected PersonBuilder(Person person)=> this.PersonBeingBuilt = person;
 
-    public PersonAddressBuilder Lives(string address)
+    public PersonAddressBuilder Lives()
     {
         return new PersonAddressBuilder(PersonBeingBuilt);
     }

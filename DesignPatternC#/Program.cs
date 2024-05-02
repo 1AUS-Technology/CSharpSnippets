@@ -1,10 +1,13 @@
-﻿namespace DesignPatternC_
+﻿using DesignPatternC_.Builder;
+
+namespace DesignPatternC_
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            BuilderRunner.Run();
+            Console.ReadLine();
         }
     }
 }
