@@ -8,7 +8,7 @@ namespace UsingCrontab
         static async Task Main(string[] args)
         {
 
-            var everydayAt11Pm= "0 23 * * *";
+            var everydayAt11Pm= "0 * * * *";
             var cronSchedule = CrontabSchedule.Parse(everydayAt11Pm);
 
             DateTime nextOccurrence = cronSchedule.GetNextOccurrence(DateTime.Now);
