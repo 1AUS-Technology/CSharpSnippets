@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadFirstDesignPatterns", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceWithNet6", "PerformanceWithNet6\PerformanceWithNet6.csproj", "{E4C5456A-6F76-4B75-B495-A6C564ADAC57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignPatternC#", "DesignPatternC#\DesignPatternC#.csproj", "{43BB82FA-4C00-4EE7-9A0D-74094E83340A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E4C5456A-6F76-4B75-B495-A6C564ADAC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4C5456A-6F76-4B75-B495-A6C564ADAC57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4C5456A-6F76-4B75-B495-A6C564ADAC57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43BB82FA-4C00-4EE7-9A0D-74094E83340A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43BB82FA-4C00-4EE7-9A0D-74094E83340A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43BB82FA-4C00-4EE7-9A0D-74094E83340A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43BB82FA-4C00-4EE7-9A0D-74094E83340A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
