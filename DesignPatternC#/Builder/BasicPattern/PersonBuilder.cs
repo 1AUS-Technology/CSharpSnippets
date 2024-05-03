@@ -1,4 +1,4 @@
-﻿namespace DesignPatternC_.Builder;
+﻿namespace DesignPatternC_.Builder.BasicPattern;
 
 public class PersonBuilder
 {
@@ -8,7 +8,7 @@ public class PersonBuilder
     {
     }
 
-    protected PersonBuilder(Person person)=> this.PersonBeingBuilt = person;
+    protected PersonBuilder(Person person) => PersonBeingBuilt = person;
 
     public PersonAddressBuilder Lives()
     {
@@ -17,7 +17,7 @@ public class PersonBuilder
 
     public PersonBuilder WorksAt(string companyName)
     {
-        this.PersonBeingBuilt.CompanyName = companyName;
+        PersonBeingBuilt.CompanyName = companyName;
         return this;
     }
 

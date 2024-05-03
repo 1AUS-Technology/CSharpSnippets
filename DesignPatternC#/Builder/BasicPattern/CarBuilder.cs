@@ -1,4 +1,4 @@
-﻿namespace DesignPatternC_.Builder;
+﻿namespace DesignPatternC_.Builder.BasicPattern;
 
 public class CarBuilder
 {
@@ -7,7 +7,7 @@ public class CarBuilder
         return new CarAssemblyLine();
     }
 
-    private class CarAssemblyLine: ISpecificCarType, ISpecificWheelSize, IBuildCar
+    private class CarAssemblyLine : ISpecificCarType, ISpecificWheelSize, IBuildCar
     {
         private readonly Car car = new Car();
         public Car Build()

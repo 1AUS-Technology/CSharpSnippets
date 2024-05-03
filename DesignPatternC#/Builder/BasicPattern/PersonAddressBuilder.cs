@@ -1,4 +1,4 @@
-﻿using DesignPatternC_.Builder;
+﻿using DesignPatternC_.Builder.BasicPattern;
 
 public class PersonAddressBuilder : PersonBuilder
 {

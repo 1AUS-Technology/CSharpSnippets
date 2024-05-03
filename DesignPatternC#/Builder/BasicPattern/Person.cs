@@ -1,4 +1,4 @@
-﻿namespace DesignPatternC_.Builder;
+﻿namespace DesignPatternC_.Builder.BasicPattern;
 
 public class Person
 {
