@@ -10,11 +10,11 @@ public class BuilderRunner
     {
         var builder = new PersonBuilder();
 
-        PersonBuilder person = builder.Lives()
-            .At("100 Queen Street")
-            .In("Brisbane")
-            .WithPostcode("4000")
-            .WorksAt("BHP");
+        //PersonBuilder person = builder.Lives()
+        //    .At("100 Queen Street")
+        //    .In("Brisbane")
+        //    .WithPostcode("4000")
+        //    .WorksAt("BHP");
 
 
         var car = CarBuilder.Create()
