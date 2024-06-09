@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Builder\MarkerInterface\" />
+    <Folder Include="ValueObjects\" />
   </ItemGroup>
 
 </Project>

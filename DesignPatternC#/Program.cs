@@ -1,4 +1,6 @@
 ﻿using DesignPatternC_.Builder;
+using DesignPatternC_.ChainOfResponsibility;
+using DesignPatternC_.ValueObjects;
 
 namespace DesignPatternC_
 {
@@ -6,7 +8,10 @@ namespace DesignPatternC_
     {
         static void Main(string[] args)
         {
-            BuilderRunner.Run();
+            //BuilderRunner.Run();
+            //ValueRunner.Run();
+
+            ChainRunner.Run();
             Console.ReadLine();
         }
     }

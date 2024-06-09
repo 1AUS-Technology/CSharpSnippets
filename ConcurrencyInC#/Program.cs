@@ -25,9 +25,11 @@ internal class Program
         //UsingAutoResetEvent.Run();
 
         //UsingBarrier.Run();
-        await UsingPeriodicTimer.Run();
+        //await UsingPeriodicTimer.Run();
 
+        var task = PerformanceClient.DoWork();
 
+        await task;
         Console.ReadLine();
     }
 }
