@@ -9,6 +9,15 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
+        try
+        {
+            Boolean.Parse("AAA");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            
+        }
         //await  DataFlowBasics.LinkBlocks();
         //ReactiveBasics.Runner();
         //await UseCollections.Runner();
@@ -26,6 +35,9 @@ internal class Program
 
         //UsingBarrier.Run();
         //await UsingPeriodicTimer.Run();
+        ThreadPool.GetMaxThreads(out var workerThreads, out var completionPortThreads);
+
+        Console.WriteLine($"Max worker threads {workerThreads} and completion threads {completionPortThreads}");
 
         var task = PerformanceClient.DoWork();
 

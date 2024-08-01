@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceWithNet6", "Perf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesignPatternC#", "DesignPatternC#\DesignPatternC#.csproj", "{43BB82FA-4C00-4EE7-9A0D-74094E83340A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureCoding", "SecureCoding\SecureCoding.csproj", "{4C3569B5-4AD5-4DFD-B3B4-D94C5DA07793}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureCoding", "SecureCoding\SecureCoding.csproj", "{4C3569B5-4AD5-4DFD-B3B4-D94C5DA07793}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipelineProcessing", "PipelineProcessing\PipelineProcessing.csproj", "{CD07E6C6-31A9-4AAF-8C60-37DA6CF87653}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{4C3569B5-4AD5-4DFD-B3B4-D94C5DA07793}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C3569B5-4AD5-4DFD-B3B4-D94C5DA07793}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C3569B5-4AD5-4DFD-B3B4-D94C5DA07793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD07E6C6-31A9-4AAF-8C60-37DA6CF87653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD07E6C6-31A9-4AAF-8C60-37DA6CF87653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD07E6C6-31A9-4AAF-8C60-37DA6CF87653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD07E6C6-31A9-4AAF-8C60-37DA6CF87653}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
