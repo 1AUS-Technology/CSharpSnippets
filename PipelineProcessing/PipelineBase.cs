@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace QR.Cii.CommonScheduleProcessor.Core.PipelineProcessing
+﻿namespace PipelineProcessing
 {
     public abstract class PipelineBase(IServiceProvider serviceProvider)
     {

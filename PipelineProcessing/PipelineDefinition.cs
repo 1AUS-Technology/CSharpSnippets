@@ -1,4 +1,4 @@
-﻿namespace QR.Cii.CommonScheduleProcessor.Core.PipelineProcessing
+﻿namespace PipelineProcessing
 {
     public class PipelineDefinition
     {

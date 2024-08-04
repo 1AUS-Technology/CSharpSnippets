@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace QR.Cii.CommonScheduleProcessor.Core.PipelineProcessing
+namespace PipelineProcessing
 {
     public class PipelineContext
     {
