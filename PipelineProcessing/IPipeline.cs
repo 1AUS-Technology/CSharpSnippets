@@ -1,7 +1,7 @@
 ﻿namespace PipelineProcessing
 {
-    public interface IPipeline
+    public interface IPipeline<T> where T : PipelineContext
     {
-        Task<PipelineContext> Execute(PipelineContext context);
+        Task<T> Execute(T context);
     }
 }
