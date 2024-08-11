@@ -1,4 +1,6 @@
-﻿namespace PipelineProcessing
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace PipelineProcessing
 {
     public abstract class PipelineBase<T>(IServiceProvider serviceProvider) : IPipeline<T> where T : PipelineContext
     {
