@@ -1,5 +1,6 @@
 ﻿using ConcurrencyInC_.Synchronisation;
 using ConcurrencyInC_.Threading;
+using ConcurrencyInC_.Threading.Cancellation;
 using ConcurrencyInC_.Threading.UsingReaderWriterLockSlim;
 using ConcurrencyInC_.Threading.UsingTimers;
 
@@ -9,15 +10,7 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        try
-        {
-            Boolean.Parse("AAA");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            
-        }
+        
         //await  DataFlowBasics.LinkBlocks();
         //ReactiveBasics.Runner();
         //await UseCollections.Runner();
@@ -39,9 +32,11 @@ internal class Program
 
         Console.WriteLine($"Max worker threads {workerThreads} and completion threads {completionPortThreads}");
 
-        var task = PerformanceClient.DoWork();
+        //var task = PerformanceClient.DoWork();
 
-        await task;
+        //await task;
+
+        CancellationRunner.Run();
         Console.ReadLine();
     }
 }
