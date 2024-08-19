@@ -1,4 +1,5 @@
 ﻿using ConcurrencyInC_.Synchronisation;
+using ConcurrencyInC_.TaskbasedAsyncPattern;
 using ConcurrencyInC_.Threading;
 using ConcurrencyInC_.Threading.Cancellation;
 using ConcurrencyInC_.Threading.UsingReaderWriterLockSlim;
@@ -36,7 +37,8 @@ internal class Program
 
         //await task;
 
-        CancellationRunner.Run();
+        //CancellationRunner.Run();
+        await UsingTaskState.Run();
         Console.ReadLine();
     }
 }

@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipelineProcessing", "Pipel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveInAction", "ReactiveInAction\ReactiveInAction.csproj", "{C6607431-B914-4CEB-8FFD-663A3402EED3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsharpRecap", "CSharpSnippets\CsharpRecap\CsharpRecap.csproj", "{5E8104D9-EE37-41CD-9090-3AA9207C7D77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{C6607431-B914-4CEB-8FFD-663A3402EED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6607431-B914-4CEB-8FFD-663A3402EED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6607431-B914-4CEB-8FFD-663A3402EED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E8104D9-EE37-41CD-9090-3AA9207C7D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E8104D9-EE37-41CD-9090-3AA9207C7D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E8104D9-EE37-41CD-9090-3AA9207C7D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E8104D9-EE37-41CD-9090-3AA9207C7D77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
