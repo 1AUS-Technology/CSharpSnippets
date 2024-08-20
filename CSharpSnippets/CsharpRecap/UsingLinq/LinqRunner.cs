@@ -10,7 +10,8 @@ public class LinqRunner
         //ChunkData();
 
         //UseJoin();
-        UseGroup();
+        //UseGroup();
+        GroupByContiguousKeys.GroupByContiguousKeys1();
     }
 
     private static void UseGroup()
