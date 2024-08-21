@@ -7,7 +7,8 @@ namespace ReflectionInAction
         static void Main(string[] args)
         {
             //ExpressionTreeRunner.Run();
-            InterpretingExpressionTrees.Run();
+            //InterpretingExpressionTrees.Run();
+            BuildingExpressions.Run();
 
 
             Console.ReadLine();
