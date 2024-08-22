@@ -14,6 +14,7 @@ public struct DebounceMeasurement
     public double Temperature { get; private set; }
     public double Humidity { get; private set; }
 
+    // use in to avoid a copy of a big struct
     public void AddMeasurement(in SensorMeasurement datum)
     {
         int index = totalMeasurements % debounceSize;

@@ -11,10 +11,11 @@ public enum IntruderRisk
 
 public class Room(string name)
 {
+    // Create a single instance of the mutated state and use it in calculation
     private AverageMeasurement average = new();
-    private DebounceMeasurement debounce = new();
-
     public ref readonly AverageMeasurement Average => ref average;
+
+    private DebounceMeasurement debounce = new();
     public ref readonly DebounceMeasurement Debounce => ref debounce;
     public string Name { get; } = name;
 
@@ -45,6 +46,7 @@ public class Room(string name)
 
     public override string ToString()
     {
+        // Using enum inside string format creates boxing, manual conversion avoids boxing
         return $"Calculated intruder risk: {RiskStatus switch
         {
             IntruderRisk.None => "None",
