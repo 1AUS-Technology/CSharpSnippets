@@ -1,4 +1,5 @@
-﻿using CsharpRecap.UsingLinq;
+﻿using CsharpRecap.Iterators;
+using CsharpRecap.UsingLinq;
 
 namespace CsharpRecap
 {
@@ -6,7 +7,9 @@ namespace CsharpRecap
     {
         static void Main(string[] args)
         {
-            LinqRunner.Run();
+            //LinqRunner.Run();
+
+            ZooShower.Show();
             Console.ReadLine();
         }
     }
