@@ -11,7 +11,7 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        
+
         //await  DataFlowBasics.LinkBlocks();
         //ReactiveBasics.Runner();
         //await UseCollections.Runner();
@@ -29,16 +29,17 @@ internal class Program
 
         //UsingBarrier.Run();
         //await UsingPeriodicTimer.Run();
-        ThreadPool.GetMaxThreads(out var workerThreads, out var completionPortThreads);
+        //ThreadPool.GetMaxThreads(out var workerThreads, out var completionPortThreads);
 
-        Console.WriteLine($"Max worker threads {workerThreads} and completion threads {completionPortThreads}");
+        //Console.WriteLine($"Max worker threads {workerThreads} and completion threads {completionPortThreads}");
 
         //var task = PerformanceClient.DoWork();
 
         //await task;
 
         //CancellationRunner.Run();
-        await UsingTaskState.Run();
+        await Cancellation.Runner();
+        //await UsingTaskState.Run();
         Console.ReadLine();
     }
 }

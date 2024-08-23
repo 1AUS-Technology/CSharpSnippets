@@ -6,8 +6,8 @@ public static class Cancellation
     {
         //CancelTask();
         //await IssueCancellationRequest();
-        //await CancelAfterTimeout();
-        await CallWaitUntilCompletionOrCancellation();
+        await CancelAfterTimeout();
+        //await CallWaitUntilCompletionOrCancellation();
     }
 
     private static void CancelTask()
@@ -90,12 +90,15 @@ public static class Cancellation
     private static async Task CancelAfterTimeout()
     {
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-
+        Console.WriteLine("Starting at " + DateTime.Now);
         try
         {
-            
+
+            cts.Token.Register(() => Console.WriteLine($"Token is cancelled at {DateTime.Now}"));
             // this task will be cancelled after 3 seconds
             await CancellableTask(cts.Token);
+
+            
             Console.WriteLine("Task finished");
         }
         catch (OperationCanceledException)
