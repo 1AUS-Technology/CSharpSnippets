@@ -1,4 +1,5 @@
 ﻿using CsharpRecap.Iterators;
+using CsharpRecap.RegularExpressions;
 using CsharpRecap.UsingLinq;
 
 namespace CsharpRecap
@@ -9,7 +10,8 @@ namespace CsharpRecap
         {
             //LinqRunner.Run();
 
-            ZooShower.Show();
+            //ZooShower.Show();
+            RegularExpressionRunner.Run();
             Console.ReadLine();
         }
     }
