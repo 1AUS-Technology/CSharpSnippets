@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace CsharpRecap.RegularExpressions;
 
@@ -8,7 +9,49 @@ public class RegularExpressionRunner
     {
         //ReplaceMatching();
 
-        IdentifyDuplicateWords();
+        //IdentifyDuplicateWords();
+
+        CultureSensitiveNumberMatchingExpressions();
+    }
+
+    private static void CultureSensitiveNumberMatchingExpressions()
+    {
+        // Define text to be parsed.
+        string input = "Office expenses on 2/13/2008:\n" +
+                       "Paper (500 sheets)                      $3.95\n" +
+                       "Pencils (box of 10)                     $1.00\n" +
+                       "Pens (box of 10)                        $4.49\n" +
+                       "Erasers                                 $2.19\n" +
+                       "Ink jet printer                        $69.95\n\n" +
+                       "Total Expenses                        $ 81.58\n";
+
+        NumberFormatInfo numberFormatInfo = CultureInfo.CurrentCulture.NumberFormat;
+
+        string currencySymbol = numberFormatInfo.CurrencySymbol;
+        bool symbolPrecedesIfPositive = numberFormatInfo.CurrencyPositivePattern % 2 == 0;
+        string groupSeparator = numberFormatInfo.CurrencyGroupSeparator;
+        string decimalSeparator = numberFormatInfo.CurrencyDecimalSeparator;
+
+        string symbolBeforeNumber = Regex.Escape(symbolPrecedesIfPositive ? currencySymbol : "");
+        string numberPattern = @"\s*[-+]?" + "([0-9]{0,3}(" + groupSeparator + "[0-9]{3})*(" + Regex.Escape(decimalSeparator) + "[0-9]+)?)";
+        string symbolAfterNumber = (!symbolPrecedesIfPositive ? currencySymbol : "");
+        string pattern =  symbolBeforeNumber + numberPattern +  symbolAfterNumber;
+
+        Console.WriteLine("The regular expression pattern is: " + pattern);
+
+        MatchCollection matches = Regex.Matches(input, pattern, RegexOptions.IgnorePatternWhitespace);
+        Console.WriteLine("Found {0} matches.", matches.Count);
+
+        List<decimal> expenses = new List<decimal>();
+
+        foreach (Match match in matches)
+        {
+            expenses.Add(Decimal.Parse(match.Groups[1].Value));
+        }
+
+        // Determine whether total is present and if present, whether it is correct.
+        decimal total = expenses.Sum();
+        Console.WriteLine("The expenses total {0:C2}.", total / 2 == expenses[^1] ? expenses[^1] : total);
     }
 
     private static void IdentifyDuplicateWords()
