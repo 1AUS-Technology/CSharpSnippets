@@ -1,4 +1,5 @@
-﻿using CsharpRecap.Iterators;
+﻿using CsharpRecap.FileAndStreamIO;
+using CsharpRecap.Iterators;
 using CsharpRecap.RegularExpressions;
 using CsharpRecap.UsingLinq;
 
@@ -11,7 +12,8 @@ namespace CsharpRecap
             //LinqRunner.Run();
 
             //ZooShower.Show();
-            RegularExpressionRunner.Run();
+            //RegularExpressionRunner.Run();
+            FileRunner.Run();
             Console.ReadLine();
         }
     }
