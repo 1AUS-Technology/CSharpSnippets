@@ -1,10 +1,13 @@
-﻿namespace SecureCoding
+﻿using SecureCoding.NetSecurity;
+
+namespace SecureCoding
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            UsingSecurityPrincipal.Run();
+            Console.ReadLine();
         }
     }
 }
