@@ -6,7 +6,10 @@ namespace SecureCoding
     {
         static void Main(string[] args)
         {
-            UsingSecurityPrincipal.Run();
+            //UsingSecurityPrincipal.Run();
+
+            //UsingWindowsSecurityContext.Run();
+            UsingGenericIdentityAndPrincipal.Run();
             Console.ReadLine();
         }
     }
