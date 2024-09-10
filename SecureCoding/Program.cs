@@ -9,7 +9,8 @@ namespace SecureCoding
             //UsingSecurityPrincipal.Run();
 
             //UsingWindowsSecurityContext.Run();
-            UsingGenericIdentityAndPrincipal.Run();
+            //UsingGenericIdentityAndPrincipal.Run();
+            StoreAsymmetricKeys.Run();
             Console.ReadLine();
         }
     }
