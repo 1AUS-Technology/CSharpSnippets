@@ -14,6 +14,7 @@ public class UsingSecurityPrincipal
     private static void ShowRolesOfPrincipal()
     {
         AppDomain myDomain = Thread.GetDomain();
+        // Set to use windows principal
         myDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
 
         WindowsPrincipal myPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
