@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{D9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWithSecurity", "Security\BlazorWithSecurity\BlazorWithSecurity.csproj", "{B848553F-1337-4CC6-8319-A90CE73C3731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorWithSecurity", "Security\RazorWithSecurity\RazorWithSecurity.csproj", "{DA243D5B-77A9-414B-B074-9748AF969FA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Security\RazorWithSecurity\Authorization.csproj", "{DA243D5B-77A9-414B-B074-9748AF969FA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
