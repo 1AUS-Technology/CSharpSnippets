@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Security\R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleSchemesAuthentication", "Security\MultipleSchemesAuthentication\MultipleSchemesAuthentication.csproj", "{37441462-7054-4F09-9918-744597A02C71}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspDataProtectionInAction", "Security\AspDataProtectionInAction\AspDataProtectionInAction.csproj", "{532B2AAA-81B9-4A7A-B117-67C199B55D73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{37441462-7054-4F09-9918-744597A02C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37441462-7054-4F09-9918-744597A02C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37441462-7054-4F09-9918-744597A02C71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{532B2AAA-81B9-4A7A-B117-67C199B55D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{532B2AAA-81B9-4A7A-B117-67C199B55D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{532B2AAA-81B9-4A7A-B117-67C199B55D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{532B2AAA-81B9-4A7A-B117-67C199B55D73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +121,7 @@ Global
 		{B848553F-1337-4CC6-8319-A90CE73C3731} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
 		{DA243D5B-77A9-414B-B074-9748AF969FA4} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
 		{37441462-7054-4F09-9918-744597A02C71} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
+		{532B2AAA-81B9-4A7A-B117-67C199B55D73} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5823713-FF71-4AC7-9D37-8624EDE38031}

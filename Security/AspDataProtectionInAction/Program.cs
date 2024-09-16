@@ -1,7 +1,5 @@
 
-using AspNetCoreRecap.HostBuilderServices;
-
-namespace AspNetCoreRecap
+namespace AspDataProtectionInAction
 {
     public class Program
     {
@@ -12,11 +10,11 @@ namespace AspNetCoreRecap
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddHostedService<HostedServiceWithLifetime>();
 
+            // Add data protection
             builder.Services.AddDataProtection();
 
             var app = builder.Build();
