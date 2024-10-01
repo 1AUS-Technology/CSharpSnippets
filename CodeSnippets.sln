@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityVunerabilitiesInCod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityIssuesWithApi", "SecurityIssuesWithApi\SecurityIssuesWithApi.csproj", "{A4A62A57-99E0-43C3-952C-9FCCBA61979D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificateManagements", "CertificateManagements\CertificateManagements.csproj", "{AB0F1138-A4BC-4F01-B14C-93D186D25831}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,10 @@ Global
 		{A4A62A57-99E0-43C3-952C-9FCCBA61979D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4A62A57-99E0-43C3-952C-9FCCBA61979D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4A62A57-99E0-43C3-952C-9FCCBA61979D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB0F1138-A4BC-4F01-B14C-93D186D25831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB0F1138-A4BC-4F01-B14C-93D186D25831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB0F1138-A4BC-4F01-B14C-93D186D25831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB0F1138-A4BC-4F01-B14C-93D186D25831}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +142,7 @@ Global
 		{532B2AAA-81B9-4A7A-B117-67C199B55D73} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
 		{B64A2F8B-BB32-4C18-9F42-77040C710955} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
 		{A4A62A57-99E0-43C3-952C-9FCCBA61979D} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
+		{AB0F1138-A4BC-4F01-B14C-93D186D25831} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5823713-FF71-4AC7-9D37-8624EDE38031}
