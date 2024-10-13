@@ -25,8 +25,5 @@ public class UsingWindowsSecurityContext
 
         WindowsIdentity identity = WindowsIdentity.GetCurrent(TokenAccessLevels.AllAccess);
         WindowsPrincipal principalFromIdentity = new WindowsPrincipal(identity);
-
-
-
     }
 }

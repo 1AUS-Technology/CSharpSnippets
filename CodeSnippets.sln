@@ -45,6 +45,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityIssuesWithApi", "Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificateManagements", "CertificateManagements\CertificateManagements.csproj", "{AB0F1138-A4BC-4F01-B14C-93D186D25831}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AdvancedNetSecurity", "AdvancedNetSecurity", "{555C6199-97EC-4D33-A308-14E891F4D85F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedAspnetCoreSecurity", "Security\AdvancedAspnetCoreSecurity\AdvancedAspnetCoreSecurity.csproj", "{C20313E4-427F-4C0A-BE0D-086D071F9ED3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +135,10 @@ Global
 		{AB0F1138-A4BC-4F01-B14C-93D186D25831}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB0F1138-A4BC-4F01-B14C-93D186D25831}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB0F1138-A4BC-4F01-B14C-93D186D25831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C20313E4-427F-4C0A-BE0D-086D071F9ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C20313E4-427F-4C0A-BE0D-086D071F9ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C20313E4-427F-4C0A-BE0D-086D071F9ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C20313E4-427F-4C0A-BE0D-086D071F9ED3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -143,6 +151,7 @@ Global
 		{B64A2F8B-BB32-4C18-9F42-77040C710955} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
 		{A4A62A57-99E0-43C3-952C-9FCCBA61979D} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
 		{AB0F1138-A4BC-4F01-B14C-93D186D25831} = {D98B2982-D35D-47D0-986E-35B664B0D34D}
+		{C20313E4-427F-4C0A-BE0D-086D071F9ED3} = {555C6199-97EC-4D33-A308-14E891F4D85F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5823713-FF71-4AC7-9D37-8624EDE38031}
