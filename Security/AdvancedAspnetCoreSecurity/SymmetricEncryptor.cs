@@ -1,88 +1,56 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 
 namespace AdvancedAspnetCoreSecurity;
 
-public class SymmetricEncryptor
+public enum EncryptionAlgorithm
 {
-    public enum EncryptionAlgorithm
+    Aes128 = 1
+}
+
+public interface ISymmetricEncryptor
+{
+    string Encrypt(string plainText, string keyName, int keyIndex, EncryptionAlgorithm algorithm);
+    string Decrypt(string cipherText, string keyName);
+}
+
+public class SymmetricEncryptor(ISecretStore secretStore) : ISymmetricEncryptor
+{
+    public string Encrypt(string plainText, string keyName, int keyIndex, EncryptionAlgorithm algorithm)
     {
-        AES128 = 1
-    }
+        var keyValue = secretStore.GetKey(keyName, keyIndex);
 
-    private readonly EncryptionAlgorithm _defaultAlgorithm = EncryptionAlgorithm.AES128;
-
-    private readonly int _defaultKeyIndex;
-    private readonly ISecretStore _secretStore;
-
-    public SymmetricEncryptor(IConfiguration config, ISecretStore secretStore)
-    {
-        _defaultKeyIndex = config.GetValue<int>("AppSettings:KeyIndex");
-        _secretStore = secretStore;
-    }
-
-    private int GetBlockSizeInBytes(EncryptionAlgorithm algorithm)
-    {
-        switch (algorithm)
+        return algorithm switch
         {
-            case EncryptionAlgorithm.AES128:
-                return 16;
-            default:
-                throw new NotImplementedException($"Cannot find block size for{algorithm.ToString()} algorithm");
-        }
-    }
-
-    public string Encrypt(string plainText, string keyName, EncryptionAlgorithm algorithm)
-    {
-        var keyString = _secretStore.GetKey(keyName, _defaultKeyIndex);
-
-        switch (algorithm)
-        {
-            case EncryptionAlgorithm.AES128:
-                return EncryptAES(plainText, keyString, _defaultAlgorithm, _defaultKeyIndex);
-            default:
-                throw new NotImplementedException(algorithm.ToString());
-        }
-    }
-
-    private string EncryptAES(string plainText, string encryptionKey, EncryptionAlgorithm algorithm, int keyIndex)
-    {
-        var keyBytes = encryptionKey.HexStringToByteArray();
-        int ivLength = AesGcm.NonceByteSizes.MaxSize;
-        int tagSize = AesGcm.TagByteSizes.MaxSize;
-
-        var initialVector = GenerateRandomBytes(ivLength);
-        byte[] tag = new byte[tagSize];
-
-        byte[] encryptedBytes = [];
-        var plainBytes = Encoding.UTF8.GetBytes(plainText);
-        var cipherBytes = new byte[plainBytes.Length];
-        using (var aes = new AesGcm(keyBytes, tagSize))
-        {
-            aes.Encrypt(initialVector, plainBytes, cipherBytes, tag);
-        }
-
-        var encryptedText = encryptedBytes.BytesToHex();
-        var ivText = initialVector.BytesToHex();
-        var tagText = tag.BytesToHex();
-
-        // concatenate all key and IV information for decryption
-        return $"[{(int)algorithm}.{keyIndex}][{ivText}.{tagText}]{encryptedText}";
+            EncryptionAlgorithm.Aes128 => EncryptAes(plainText, keyValue, EncryptionAlgorithm.Aes128, keyIndex),
+            _ => throw new NotImplementedException(algorithm.ToString())
+        };
     }
 
 
     public string Decrypt(string cipherText, string keyName)
     {
-        (int algorithm, int keyIndex, string initialVector, string tagText, string trimmedCipherText) = GetAlgorithm(cipherText);
-        var encryptionKey = _secretStore.GetKey(keyName, keyIndex);
+        var (algorithm, keyIndex, initialVector, tagText, trimmedCipherText) = GetAlgorithm(cipherText);
+
+
+        return algorithm switch
+        {
+            EncryptionAlgorithm.Aes128 => DescryptAes(keyName, keyIndex, tagText, trimmedCipherText, initialVector),
+            _ => throw new NotImplementedException(algorithm.ToString())
+        };
+    }
+
+    private string DescryptAes(string keyName, int keyIndex, string tagText, string trimmedCipherText,
+        string initialVector)
+    {
+        var encryptionKey = secretStore.GetKey(keyName, keyIndex);
 
         var keyBytes = encryptionKey.HexStringToByteArray();
         var tagBytes = tagText.HexStringToByteArray();
-
         var encryptedBytes = trimmedCipherText.HexStringToByteArray();
-        byte[] plainText = new byte[encryptedBytes.Length];
-        using (var aes = new AesGcm(keyBytes, tagBytes.Length))
+        var plainText = new byte[encryptedBytes.Length];
+
+        using (var aes = new AesGcm(keyBytes, AesGcm.TagByteSizes.MaxSize))
         {
             aes.Decrypt(initialVector.HexStringToByteArray(), encryptedBytes, tagBytes, plainText);
         }
@@ -90,50 +58,72 @@ public class SymmetricEncryptor
         return Encoding.UTF8.GetString(plainText);
     }
 
-    protected (int algorithm, int keyIndex, string initialVector, string tagText, string trimmedCipherText) GetAlgorithm(string cipherText)
+    private string EncryptAes(string plainText, string encryptionKey, EncryptionAlgorithm algorithm, int keyIndex)
     {
+        var keyBytes = encryptionKey.HexStringToByteArray();
+        var ivLength = AesGcm.NonceByteSizes.MaxSize;
+        var tagSize = AesGcm.TagByteSizes.MaxSize;
+
+        var initialVector = GenerateRandomBytes(ivLength);
+        var tag = new byte[tagSize];
+
+        var plainBytes = Encoding.UTF8.GetBytes(plainText);
+        var cipherBytes = new byte[plainBytes.Length];
+        using (var aes = new AesGcm(keyBytes, tagSize))
+        {
+            aes.Encrypt(initialVector, plainBytes, cipherBytes, tag);
+        }
+
+        var encryptedText = cipherBytes.BytesToHex();
+        var ivText = initialVector.BytesToHex();
+        var tagText = tag.BytesToHex();
+
+        // concatenate all key and IV information for decryption
+        return $"[{(int)algorithm}.{keyIndex}][{ivText}.{tagText}]{encryptedText}";
+    }
+
+    protected (EncryptionAlgorithm algorithm, int keyIndex, string initialVector, string tagText, string
+        trimmedCipherText)
+        GetAlgorithm(string cipherText)
+    {
+        // Check if the cipherText is too short or doesn't start with '['
         if (cipherText.Length <= 5 || cipherText[0] != '[')
         {
-            throw new ArgumentException("Rubbish encrypted data");
+            throw new ArgumentException("Invalid encrypted data");
         }
 
-        var firstClosingBracketLocation = cipherText.IndexOf(']', StringComparison.OrdinalIgnoreCase);
-        var cipherInformation = cipherText.Substring(1, firstClosingBracketLocation - 1).Split(".");
-
-        int algorithm;
-        if (int.TryParse(cipherInformation[0], out var foundAlgorithm))
+        // Split the cipherText into parts using ']' as delimiter
+        var parts = cipherText.Split(']');
+        // Ensure we have at least 3 parts: [algorithm.keyIndex][iv.tag]ciphertext
+        if (parts.Length < 3)
         {
-            algorithm = foundAlgorithm;
+            throw new ArgumentException("Invalid encrypted data format");
         }
-        else
+
+        // Extract and parse algorithm and key index
+        var algorithmInfo = parts[0][1..].Split('.'); // Remove leading '[' and split by '.'
+        if (algorithmInfo.Length != 2 ||
+            !int.TryParse(algorithmInfo[0], out var algorithm) ||
+            !int.TryParse(algorithmInfo[1], out var keyIndex))
         {
-            throw new ArgumentException("Invalid encrypted data. Cannot parse algorithm");
+            throw new ArgumentException("Invalid algorithm or key index");
         }
 
-        int keyIndex;
-        if (cipherInformation.Length == 2 && int.TryParse(cipherInformation[1], out var foundKeyIndex))
+        // Extract and split IV and tag
+        var ivAndTag = parts[1][1..].Split('.'); // Remove leading '[' and split by '.'
+        if (ivAndTag.Length != 2)
         {
-            keyIndex = foundKeyIndex;
-        }
-        else
-        {
-            throw new ArgumentException("Invalid encrypted data. Cannot parse key index");
+            throw new ArgumentException("Invalid IV or tag format");
         }
 
-        var secondBracketOpeningPosition = firstClosingBracketLocation + 1;
-
-        var secondBracketClosingPosition = cipherText.IndexOf(']', secondBracketOpeningPosition);
-
-        var ivAndTag = cipherText.Substring(secondBracketClosingPosition + 1, secondBracketClosingPosition - 1).Split(".");
-
-        string tagText;
-        var initialVector = ivAndTag[0];
-        tagText = ivAndTag[1];
-
-        string trimmedCipherText = cipherText.Substring(secondBracketClosingPosition + 1);
-
-
-        return (algorithm, keyIndex, initialVector, tagText, trimmedCipherText);
+        // Return a tuple with all extracted information
+        return (
+            (EncryptionAlgorithm)algorithm,
+            keyIndex,
+            initialVector: ivAndTag[0],
+            tagText: ivAndTag[1],
+            trimmedCipherText: string.Join(']', parts[2..]) // Rejoin remaining parts as they may contain ']'
+        );
     }
 
     private byte[] GenerateRandomBytes(int blockSize)
