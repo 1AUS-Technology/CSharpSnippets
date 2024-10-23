@@ -7,6 +7,8 @@ namespace AdvancedAspnetCoreSecurity
     {
         private static void Main(string[] args)
         {
+            HomeMadeEncryption.Run();
+            return;
 
             (string encryptionKey, string initialVector) = ReadKeyInformationFromConfigurationFile();
 
