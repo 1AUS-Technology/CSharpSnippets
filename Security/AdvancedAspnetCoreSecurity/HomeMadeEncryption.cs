@@ -27,13 +27,13 @@ public class HomeMadeEncryption
             var hex = myRijndael.IV.BytesToHex();
 
             Console.WriteLine("IV Generated: " + hex);
-            Console.WriteLine($"QR: {InitialisationVector}");
+            Console.WriteLine($"IV QR: {InitialisationVector}");
 
             Console.WriteLine("IV Length");
 
             Console.WriteLine("IV Generated : " + hex.Length);
 
-            Console.WriteLine("QR Length: " + InitialisationVector.Length);
+            Console.WriteLine("IV QR Length: " + InitialisationVector.Length);
 
             var key = myRijndael.Key;
 
