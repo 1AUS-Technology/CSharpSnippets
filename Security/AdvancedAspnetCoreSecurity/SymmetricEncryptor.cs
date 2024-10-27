@@ -3,15 +3,16 @@ using System.Text;
 
 namespace AdvancedAspnetCoreSecurity;
 
-public enum EncryptionAlgorithm
-{
-    Aes128 = 1
-}
+
 
 public interface ISymmetricEncryptor
 {
     string Encrypt(string plainText, string keyName, int keyIndex, EncryptionAlgorithm algorithm);
     string Decrypt(string cipherText, string keyName);
+}
+public enum EncryptionAlgorithm
+{
+    Aes128 = 1
 }
 
 public class SymmetricEncryptor(ISecretStore secretStore) : ISymmetricEncryptor
@@ -27,11 +28,34 @@ public class SymmetricEncryptor(ISecretStore secretStore) : ISymmetricEncryptor
         };
     }
 
+    private string EncryptAes(string plainText, string encryptionKey, EncryptionAlgorithm algorithm, int keyIndex)
+    {
+        var keyBytes = encryptionKey.HexStringToByteArray();
+        var ivLength = AesGcm.NonceByteSizes.MaxSize;
+        var tagSize = AesGcm.TagByteSizes.MaxSize;
+
+        byte[] initialVector = RandomNumberGenerator.GetBytes(ivLength);
+        var tag = new byte[tagSize];
+
+        var plainBytes = Encoding.UTF8.GetBytes(plainText);
+        var cipherBytes = new byte[plainBytes.Length];
+        using (var aes = new AesGcm(keyBytes, tagSize))
+        {
+            aes.Encrypt(initialVector, plainBytes, cipherBytes, tag);
+        }
+
+        var encryptedText = cipherBytes.BytesToHex();
+        var ivText = initialVector.BytesToHex();
+        var tagText = tag.BytesToHex();
+
+        // concatenate all key and IV information for decryption
+        return $"[{(int)algorithm}.{keyIndex}][{ivText}.{tagText}]{encryptedText}";
+    }
+
 
     public string Decrypt(string cipherText, string keyName)
     {
         var (algorithm, keyIndex, initialVector, tagText, trimmedCipherText) = GetAlgorithm(cipherText);
-
 
         return algorithm switch
         {
@@ -58,30 +82,7 @@ public class SymmetricEncryptor(ISecretStore secretStore) : ISymmetricEncryptor
         return Encoding.UTF8.GetString(plainText);
     }
 
-    private string EncryptAes(string plainText, string encryptionKey, EncryptionAlgorithm algorithm, int keyIndex)
-    {
-        var keyBytes = encryptionKey.HexStringToByteArray();
-        var ivLength = AesGcm.NonceByteSizes.MaxSize;
-        var tagSize = AesGcm.TagByteSizes.MaxSize;
-
-        var initialVector = GenerateRandomBytes(ivLength);
-        var tag = new byte[tagSize];
-
-        var plainBytes = Encoding.UTF8.GetBytes(plainText);
-        var cipherBytes = new byte[plainBytes.Length];
-        using (var aes = new AesGcm(keyBytes, tagSize))
-        {
-            aes.Encrypt(initialVector, plainBytes, cipherBytes, tag);
-        }
-
-        var encryptedText = cipherBytes.BytesToHex();
-        var ivText = initialVector.BytesToHex();
-        var tagText = tag.BytesToHex();
-
-        // concatenate all key and IV information for decryption
-        return $"[{(int)algorithm}.{keyIndex}][{ivText}.{tagText}]{encryptedText}";
-    }
-
+   
     protected (EncryptionAlgorithm algorithm, int keyIndex, string initialVector, string tagText, string
         trimmedCipherText)
         GetAlgorithm(string cipherText)
@@ -126,8 +127,4 @@ public class SymmetricEncryptor(ISecretStore secretStore) : ISymmetricEncryptor
         );
     }
 
-    private byte[] GenerateRandomBytes(int blockSize)
-    {
-        return RandomNumberGenerator.GetBytes(blockSize);
-    }
 }

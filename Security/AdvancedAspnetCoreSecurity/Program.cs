@@ -10,7 +10,7 @@ namespace AdvancedAspnetCoreSecurity
 
             (string encryptionKey, string initialVector) = ReadKeyInformationFromConfigurationFile();
 
-            string plainText = "This is a secret message";
+            string plainText = "mypassword";
             byte[] keyBytes = Convert.FromBase64String(encryptionKey);
             byte[] ivBytes = Convert.FromBase64String(initialVector);
 
@@ -19,7 +19,7 @@ namespace AdvancedAspnetCoreSecurity
             string decryptedText = SymmetricEncryptionWithMistakes.Decrypt(encryptedBytes, keyBytes, ivBytes);
             
             Console.WriteLine($"Plain text: {plainText}");
-            Console.WriteLine($"Encrypted (Base64): { Convert.ToBase64String(encryptedBytes)}");
+            Console.WriteLine($"Encrypted (HEX): { encryptedBytes.BytesToHex()}");
             Console.WriteLine($"Decrypted text: {decryptedText}");
 
             Console.ReadLine();
