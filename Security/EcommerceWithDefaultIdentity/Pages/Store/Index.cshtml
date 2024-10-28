@@ -1,0 +1,31 @@
+﻿@using EcommerceWithDefaultIdentity.Models
+@model IQueryable<EcommerceWithDefaultIdentity.Models.Product>
+
+@{
+    Layout = "_Layout";
+}
+
+<h4 class="bg-primary text-white text-center p-2">Store Signed In</h4>
+<div class="p-2">
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th><th>Name</th><th>Category</th>
+            <th class="text-end">Price</th>
+
+        </tr>
+        </thead>
+        
+        <tbody>
+        @foreach (Product p in Model.OrderBy(p => p.Id))
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Name</td>
+                <td>@p.Category</td>
+                <td class="text-end">$@p.Price.ToString("F2")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

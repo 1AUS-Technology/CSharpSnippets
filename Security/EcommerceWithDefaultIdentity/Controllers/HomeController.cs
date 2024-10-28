@@ -1,21 +1,24 @@
 using EcommerceWithDefaultIdentity.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using EcommerceWithDefaultIdentity.Data;
 
 namespace EcommerceWithDefaultIdentity.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ProductDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ProductDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(_context.Products);
         }
 
         public IActionResult Privacy()
