@@ -1,8 +1,10 @@
 ﻿using EcommerceWithDefaultIdentity.Data;
 using EcommerceWithDefaultIdentity.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 
+[Authorize(Roles = "Admin")]
 public class EditModel : PageModel
 {
     public EditModel(ProductDbContext ctx) => DbContext = ctx;

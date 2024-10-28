@@ -1,9 +1,12 @@
 ﻿using EcommerceWithDefaultIdentity.Data;
 using EcommerceWithDefaultIdentity.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceWithDefaultIdentity.Controllers;
 
+// restrict Administrators only
+[Authorize(Roles = "Admin")]
 public class AdminController(ProductDbContext ctx) : Controller
 {
     public IActionResult Index() => View(ctx.Products);

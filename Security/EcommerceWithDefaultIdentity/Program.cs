@@ -20,6 +20,8 @@ namespace EcommerceWithDefaultIdentity
                 .AddEntityFrameworkStores<ProductDbContext>();
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddHttpsRedirection(options=> options.HttpsPort = 8864);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -37,7 +39,11 @@ namespace EcommerceWithDefaultIdentity
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            // Enable authentication and Authz
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseHttpsRedirection();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
