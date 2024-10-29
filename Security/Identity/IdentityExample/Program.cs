@@ -1,4 +1,5 @@
 using IdentityExample.CustomSecurity;
+using IdentityExample.CustomSecurity.AuthorizationPolicy;
 using IdentityExample.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,15 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+
+// Add the custom authentication handler
+builder.Services.AddAuthentication(options =>
+{
+    options.AddScheme<CutiUsesAuthenticationHandler>(CutiUsesAuthenticationHandler.AuthenticationSchemeName, "Query String Authentication Scheme");
+    options.DefaultAuthenticateScheme = CutiUsesAuthenticationHandler.AuthenticationSchemeName;
+});
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -33,11 +43,15 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseMiddleware<CustomAuthentication>();
+//app.UseMiddleware<CustomAuthentication>();
+// use the default authentication middleware
+app.UseAuthentication();
 app.UseMiddleware<RoleMembership>();
+
 app.UseRouting();
+
 app.UseAuthorization();
-app.UseMiddleware<CustomAuthorization>();
+//app.UseMiddleware<CustomAuthorization>();
 app.UseMiddleware<ClaimsReporter>();
 
 app.UseEndpoints(endpoints => { _ = endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World"); }); });
