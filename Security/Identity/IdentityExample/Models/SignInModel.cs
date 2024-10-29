@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace IdentityExample.Models;
 
@@ -19,7 +20,7 @@ public class SignInModel : PageModel
         Username = User.Identity.Name ?? "(No Signed In User)";
     }
 
-    public async Task<ActionResult> OnPost(string userName)
+    public async Task<ActionResult> OnPost(string userName, [FromQuery]string returnUrl)
     {
         Claim claim = new Claim(ClaimTypes.Name, userName);
         ClaimsIdentity simpleFormIdentity = new ClaimsIdentity("simpleform");
@@ -27,6 +28,7 @@ public class SignInModel : PageModel
 
         await HttpContext.SignInAsync(new ClaimsPrincipal(simpleFormIdentity));
 
-        return Redirect("/signin");
+        var url = Url.IsLocalUrl(returnUrl) ? returnUrl : "/signin";
+        return Redirect(url);
     }
 }

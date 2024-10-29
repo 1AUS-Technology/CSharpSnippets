@@ -1,6 +1,7 @@
 using IdentityExample.CustomSecurity;
 using IdentityExample.CustomSecurity.AuthorizationPolicy;
 using IdentityExample.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,8 +21,20 @@ builder.Services.AddRazorPages();
 // Add the custom authentication handler
 builder.Services.AddAuthentication(options =>
 {
-    options.AddScheme<CutiUsesAuthenticationHandler>(CutiUsesAuthenticationHandler.AuthenticationSchemeName, "Query String Authentication Scheme");
-    options.DefaultAuthenticateScheme = CutiUsesAuthenticationHandler.AuthenticationSchemeName;
+    
+    //options.AddScheme<CutiUsesAuthenticationHandler>(CutiUsesAuthenticationHandler.AuthenticationSchemeName, "Query String Authentication Scheme");
+    //options.DefaultAuthenticateScheme = CutiUsesAuthenticationHandler.AuthenticationSchemeName;
+
+    // use the built in cookies authentication scheme
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+.AddCookie(cookiesOptions =>
+{
+    cookiesOptions.LoginPath = "/signin";
+    // defines the URL where clients will be redirected for Forbid responses
+    cookiesOptions.AccessDeniedPath = "/signin/403";
+    cookiesOptions.ExpireTimeSpan = TimeSpan.FromHours(2);
+    cookiesOptions.SlidingExpiration = true;
 });
 
 builder.Services.AddAuthorization();
