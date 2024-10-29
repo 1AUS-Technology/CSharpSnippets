@@ -12,14 +12,26 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? 
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                                throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-        builder.Services.AddDbContext<ProductDbContext>(options =>  
-            options.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.MigrationsAssembly(Assembly.GetExecutingAssembly())));
+        builder.Services.AddDbContext<ProductDbContext>(options =>
+            options.UseSqlServer(connectionString,
+                sqlServerOptions => sqlServerOptions.MigrationsAssembly(Assembly.GetExecutingAssembly())));
+
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                        .AddEntityFrameworkStores<ProductDbContext>();
+        builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.Password.RequiredLength = 16;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 8;
+            })
+            .AddEntityFrameworkStores<ProductDbContext>();
 
         builder.Services.AddControllersWithViews();
 
