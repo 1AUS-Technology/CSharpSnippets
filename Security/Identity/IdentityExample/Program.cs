@@ -25,6 +25,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -56,8 +57,9 @@ app.UseMiddleware<ClaimsReporter>();
 
 app.UseEndpoints(endpoints => { _ = endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World"); }); });
 app.MapGet("/secret", SecretEndpoint.Endpoint).WithDisplayName("secret");
-app.Map("/signin", CustomSignInAndSignOut.SignIn);
-app.Map("/signout", CustomSignInAndSignOut.SignOut);
+
+//app.Map("/signin", CustomSignInAndSignOut.SignIn);
+//app.Map("/signout", CustomSignInAndSignOut.SignOut);
 
 app.MapRazorPages();
 

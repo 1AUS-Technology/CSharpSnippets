@@ -23,11 +23,13 @@ public class AuthenticationSignInHandler : IAuthenticationSignInHandler
 
     public Task ChallengeAsync(AuthenticationProperties? properties)
     {
+        context.Response.Redirect("/signin/401");
         return Task.CompletedTask;
     }
 
     public Task ForbidAsync(AuthenticationProperties? properties)
     {
+        context.Response.Redirect("/signout/403");
         return Task.CompletedTask;
     }
 
