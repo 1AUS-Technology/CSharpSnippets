@@ -1,10 +1,9 @@
 using System.Security.Claims;
 
-public class ClaimsReporter
+namespace IdentityExample.CustomSecurity;
+
+public class ClaimsReporter(RequestDelegate requestDelegate)
 {
-    private RequestDelegate next;
-    public ClaimsReporter(RequestDelegate requestDelegate)
-            => next = requestDelegate;
     public async Task Invoke(HttpContext context)
     {
         ClaimsPrincipal p = context.User;
@@ -16,13 +15,13 @@ public class ClaimsReporter
         foreach (ClaimsIdentity ident in p.Identities)
         {
             Console.WriteLine($"Auth type: {ident.AuthenticationType}," + $" {ident.Claims.Count()} claims");
-                
+
             foreach (Claim claim in ident.Claims)
             {
                 Console.WriteLine($"Type: {GetName(claim.Type)}, " + $"Value: {claim.Value}, Issuer: {claim.Issuer}");
             }
         }
-        await next(context);
+        await requestDelegate(context);
     }
     private string GetName(string claimType) => Path.GetFileName(new Uri(claimType).LocalPath);
 }

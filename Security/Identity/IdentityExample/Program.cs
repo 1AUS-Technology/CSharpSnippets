@@ -1,3 +1,4 @@
+using IdentityExample.CustomSecurity;
 using IdentityExample.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,9 +34,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseMiddleware<CustomAuthentication>();
+app.UseMiddleware<RoleMembership>();
 app.UseRouting();
 app.UseAuthorization();
+app.UseMiddleware<CustomAuthorization>();
 app.UseMiddleware<ClaimsReporter>();
+
 app.UseEndpoints(endpoints => {
     _ = endpoints.MapGet("/", async context =>
     {
@@ -44,9 +48,6 @@ app.UseEndpoints(endpoints => {
 });
 app.MapGet("/secret", SecretEndpoint.Endpoint)
 .WithDisplayName("secret");
-
-
-
 
 app.MapRazorPages();
 
