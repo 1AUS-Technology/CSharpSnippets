@@ -40,14 +40,10 @@ app.UseAuthorization();
 app.UseMiddleware<CustomAuthorization>();
 app.UseMiddleware<ClaimsReporter>();
 
-app.UseEndpoints(endpoints => {
-    _ = endpoints.MapGet("/", async context =>
-    {
-        await context.Response.WriteAsync("Hello World");
-    });
-});
-app.MapGet("/secret", SecretEndpoint.Endpoint)
-.WithDisplayName("secret");
+app.UseEndpoints(endpoints => { _ = endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World"); }); });
+app.MapGet("/secret", SecretEndpoint.Endpoint).WithDisplayName("secret");
+app.Map("/signin", CustomSignInAndSignOut.SignIn);
+app.Map("/signout", CustomSignInAndSignOut.SignOut);
 
 app.MapRazorPages();
 
