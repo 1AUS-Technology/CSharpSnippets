@@ -20,19 +20,28 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+    _ = app.UseMigrationsEndPoint();
 }
 else
 {
-    app.UseExceptionHandler("/Error");
+    _ = app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    _ = app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseEndpoints(endpoints => {
+    _ = endpoints.MapGet("/", async context =>
+    {
+        await context.Response.WriteAsync("Hello World");
+    });
+});
+app.MapGet("/secret", SecretEndpoint.Endpoint)
+.WithDisplayName("secret");
+
 
 app.UseAuthorization();
 
