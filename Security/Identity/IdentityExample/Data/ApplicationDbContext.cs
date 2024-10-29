@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace TodoAppUsingIdentity.Data
+namespace IdentityExample.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -9,8 +9,5 @@ namespace TodoAppUsingIdentity.Data
             : base(options)
         {
         }
-
-        public DbSet<TodoItem> TodoItems { get; set; }
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace TodoAppUsingIdentity.Pages
+namespace IdentityExample.Pages
 {
     public class PrivacyModel : PageModel
     {
