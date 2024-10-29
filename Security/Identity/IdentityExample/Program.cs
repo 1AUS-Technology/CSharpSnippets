@@ -32,7 +32,10 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseMiddleware<CustomAuthentication>();
 app.UseRouting();
+app.UseAuthorization();
+app.UseMiddleware<ClaimsReporter>();
 app.UseEndpoints(endpoints => {
     _ = endpoints.MapGet("/", async context =>
     {
@@ -43,7 +46,7 @@ app.MapGet("/secret", SecretEndpoint.Endpoint)
 .WithDisplayName("secret");
 
 
-app.UseAuthorization();
+
 
 app.MapRazorPages();
 
