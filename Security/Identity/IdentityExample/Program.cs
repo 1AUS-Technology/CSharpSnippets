@@ -1,7 +1,9 @@
 using IdentityExample.CustomSecurity;
 using IdentityExample.CustomSecurity.AuthorizationHandlers;
+using IdentityExample.CustomSecurity.AuthorizationPolicies;
 using IdentityExample.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +20,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
+
+// Register the authorization handler
+builder.Services.AddTransient<IAuthorizationHandler, CustomRequirementHandler>();
 
 // Add the custom authentication handler
 builder.Services.AddAuthentication(options =>
@@ -38,7 +43,7 @@ builder.Services.AddAuthentication(options =>
     cookiesOptions.SlidingExpiration = true;
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options => AuthorizationPolicies.AddPolicies(options));
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
