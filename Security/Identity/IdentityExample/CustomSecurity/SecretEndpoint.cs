@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 
+namespace IdentityExample.CustomSecurity;
+
 class SecretEndpoint
 {
     [Authorize(Roles = "Administrator")]

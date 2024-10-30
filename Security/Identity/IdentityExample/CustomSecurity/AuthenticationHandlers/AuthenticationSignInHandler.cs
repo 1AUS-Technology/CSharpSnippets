@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 
-namespace IdentityExample.CustomSecurity.AuthorizationPolicy;
+namespace IdentityExample.CustomSecurity.AuthenticationHandlers;
 
 public class AuthenticationSignInHandler : IAuthenticationSignInHandler
 {

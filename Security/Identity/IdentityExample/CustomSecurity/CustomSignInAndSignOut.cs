@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using IdentityExample.CustomSecurity.AuthorizationPolicy;
+using IdentityExample.CustomSecurity.AuthenticationHandlers;
 using Microsoft.AspNetCore.Authentication;
 
 namespace IdentityExample.CustomSecurity;

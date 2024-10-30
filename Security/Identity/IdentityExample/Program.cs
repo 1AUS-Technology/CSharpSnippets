@@ -1,5 +1,5 @@
 using IdentityExample.CustomSecurity;
-using IdentityExample.CustomSecurity.AuthorizationPolicy;
+using IdentityExample.CustomSecurity.AuthorizationHandlers;
 using IdentityExample.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +17,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
 
 // Add the custom authentication handler
 builder.Services.AddAuthentication(options =>
@@ -59,13 +60,14 @@ app.UseStaticFiles();
 
 //app.UseMiddleware<CustomAuthentication>();
 // use the default authentication middleware
-app.UseAuthentication();
+//app.UseAuthentication();
 app.UseMiddleware<RoleMembership>();
 
 app.UseRouting();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 //app.UseMiddleware<CustomAuthorization>();
+app.UseMiddleware<AuthorizationReporter>();
 app.UseMiddleware<ClaimsReporter>();
 
 app.UseEndpoints(endpoints => { _ = endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World"); }); });
@@ -75,5 +77,6 @@ app.MapGet("/secret", SecretEndpoint.Endpoint).WithDisplayName("secret");
 //app.Map("/signout", CustomSignInAndSignOut.SignOut);
 
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();

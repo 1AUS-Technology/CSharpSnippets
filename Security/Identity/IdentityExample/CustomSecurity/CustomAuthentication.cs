@@ -1,5 +1,7 @@
 using System.Security.Claims;
 
+namespace IdentityExample.CustomSecurity;
+
 class CustomAuthentication
 {
     private RequestDelegate _next;
