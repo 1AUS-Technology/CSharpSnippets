@@ -1,6 +1,4 @@
-﻿using System.Text.Encodings.Web;
-
-namespace AdvancedAspnetCoreSecurity.Encoding;
+﻿namespace AdvancedAspnetCoreSecurity.EncodingExample;
 
 public class TestBase64
 {

@@ -1,5 +1,7 @@
 using System.Security.Claims;
 
+namespace IdentityExample.CustomSecurity;
+
 class CustomAuthentication
 {
     private RequestDelegate _next;
@@ -11,7 +13,9 @@ class CustomAuthentication
 
     public async Task InvokeAsync(HttpContext context)
     {
-        string? user = context.Request.Query["user"];
+        //string? user = context.Request.Query["user"];
+        // instead of getting the user detail from the query string, we get it from the cookies
+        string? user = context.Request.Cookies["authenticatedUser"];
         if (!string.IsNullOrWhiteSpace(user))
         {
             Claim userClaim = new Claim(ClaimTypes.Name, user);

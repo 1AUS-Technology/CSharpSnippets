@@ -9,7 +9,7 @@ public class Hasher
         bool saveSaltInResult)
     {
         var fullText = string.Concat(plainText, salt);
-        var data = Encoding.UTF8.GetBytes(fullText);
+        var data =System.Text.Encoding.UTF8 .GetBytes(fullText);
         using (SHA512 sha = new SHA512Managed())
         {
             var hashBytes = sha.ComputeHash(data);
