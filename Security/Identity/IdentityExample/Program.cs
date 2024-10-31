@@ -22,8 +22,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddSingleton<ILookupNormalizer, UpperInvariantLookupNormalizer>();
-builder.Services.AddSingleton<IUserStore<AppUser>, UserStore>();
-builder.Services.AddIdentityCore<AppUser>();
+builder.Services.AddSingleton<IUserStore<AppUser>, AppUserStore>();
+builder.Services.AddIdentityCore<AppUser>(options =>
+{
+    options.Tokens.EmailConfirmationTokenProvider = "SimpleEmail";
+    options.Tokens.ChangeEmailTokenProvider = "SimpleEmail";
+})
+.AddTokenProvider<EmailConfirmationTokenGenerator>("SimpleEmail")
+.AddTokenProvider<PhoneConfirmationTokenGenerator>(TokenOptions.DefaultPhoneProvider);
 
 // Register the authorization handler
 //builder.Services.AddTransient<IAuthorizationHandler, CustomRequirementHandler>();

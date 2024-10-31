@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Security.Claims;
 using IdentityExample.CustomSecurity.CustomStore;
 using Microsoft.AspNetCore.Identity;
 
@@ -119,6 +120,8 @@ public partial class AppUserStore : IUserStore<AppUser>
                 PhoneNumber = "123-4567",
                 PhoneNumberConfirmed = true
             };
+            user.Claims = BuiltInUsersAndClaims.UserAndRoles[user.UserName]
+                .Select(role => new Claim(ClaimTypes.Role, role)).ToList();
             users.TryAdd(user.Id, user);
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace IdentityExample.CustomSecurity.CustomStore;
+﻿using System.Security.Claims;
+
+namespace IdentityExample.CustomSecurity.CustomStore;
 
 public class AppUser
 {
@@ -11,4 +13,8 @@ public class AppUser
     public bool EmailAddressConfirmed { get; set; }
     public string PhoneNumber { get; set; }
     public bool PhoneNumberConfirmed { get; set; }
+    public string FavoriteFood { get; set; }
+    public string Hobby { get; set; }
+    public IList<Claim> Claims { get; set; }
+    public string SecurityStamp { get; set; }
 }
