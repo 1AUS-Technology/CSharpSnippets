@@ -8,10 +8,12 @@ namespace IdentityExample.CustomSecurity.Store;
 public partial class AppUserStore : IUserStore<AppUser>
 {
     private readonly ConcurrentDictionary<string, AppUser> users = new();
+    private readonly IPasswordHasher<AppUser> _passwordHasher;
 
-    public AppUserStore(ILookupNormalizer normalizer)
+    public AppUserStore(ILookupNormalizer normalizer, IPasswordHasher<AppUser> passwordHasher)
     {
         Normalizer = normalizer;
+        _passwordHasher = passwordHasher;
         SeedStore();
     }
 
@@ -120,6 +122,7 @@ public partial class AppUserStore : IUserStore<AppUser>
                 PhoneNumber = "123-4567",
                 PhoneNumberConfirmed = true
             };
+            user.PasswordHash = _passwordHasher.HashPassword(user, $"Password{idCounter}");
             user.Claims = BuiltInUsersAndClaims.UserAndRoles[user.UserName]
                 .Select(role => new Claim(ClaimTypes.Role, role)).ToList();
             users.TryAdd(user.Id, user);

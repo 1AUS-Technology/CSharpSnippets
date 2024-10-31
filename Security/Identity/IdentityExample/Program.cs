@@ -31,6 +31,7 @@ builder.Services.AddIdentityCore<AppUser>(options =>
 .AddTokenProvider<EmailConfirmationTokenGenerator>("SimpleEmail")
 .AddTokenProvider<PhoneConfirmationTokenGenerator>(TokenOptions.DefaultPhoneProvider);
 
+builder.Services.AddSingleton<IPasswordHasher<AppUser>, SimplePasswordHasher>();
 // Register the authorization handler
 //builder.Services.AddTransient<IAuthorizationHandler, CustomRequirementHandler>();
 

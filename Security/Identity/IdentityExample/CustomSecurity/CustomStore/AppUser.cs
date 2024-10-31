@@ -17,4 +17,5 @@ public class AppUser
     public string Hobby { get; set; }
     public IList<Claim> Claims { get; set; }
     public string SecurityStamp { get; set; }
+    public string PasswordHash { get; set; }
 }
