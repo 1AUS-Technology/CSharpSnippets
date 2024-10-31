@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace IdentityExample.CustomSecurity.CustomStore;
 
@@ -19,4 +20,12 @@ public class AppUser
     public string SecurityStamp { get; set; }
     public string PasswordHash { get; set; }
     public bool TwoFactorEnabled { get; set; }
+
+    public bool CanUserBeLockedout { get; set; } = true;
+    public int FailedSignInCount { get; set; }
+    public DateTimeOffset? LockoutEnd { get; set; }
+
+    public bool AuthenticatorEnabled { get; set; }
+    public string AuthenticatorKey { get; set; }
+    public IList<UserLoginInfo> UserLogins { get; set; }
 }

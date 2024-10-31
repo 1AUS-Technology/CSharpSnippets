@@ -2,6 +2,7 @@ using IdentityExample.CustomSecurity;
 using IdentityExample.CustomSecurity.AuthorizationPolicies;
 using IdentityExample.CustomSecurity.CustomRoles;
 using IdentityExample.CustomSecurity.CustomStore;
+using IdentityExample.CustomSecurity.ExternalAuthentication;
 using IdentityExample.CustomSecurity.Store;
 using IdentityExample.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -46,6 +47,7 @@ builder.Services.AddAuthentication(options =>
 
         // use the built in cookies authentication scheme
         options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.AddScheme<ExternalAuthenticationHandler>(Constants.DemoAuthenticationScheme, "Demo Service");
     })
     .AddCookie(cookiesOptions =>
     {
@@ -56,7 +58,8 @@ builder.Services.AddAuthentication(options =>
         cookiesOptions.SlidingExpiration = true;
     })
     .AddCookie(IdentityConstants.TwoFactorUserIdScheme)
-    .AddCookie(IdentityConstants.TwoFactorRememberMeScheme);
+    .AddCookie(IdentityConstants.TwoFactorRememberMeScheme)
+    .AddCookie(IdentityConstants.ExternalScheme);
 
 builder.Services.AddAuthorization(options => AuthorizationPolicies.AddPolicies(options));
 
