@@ -23,28 +23,39 @@ public class ExternalAuthInfo
     public string grant_type { get; set; }
     public string code { get; set; }
 }
+
 public class DemoExternalAuthController : Controller
 {
-    private static string expectedID = "MyClientID";
-    private static string expectedSecret = "MyClientSecret";
+    private static readonly string expectedID = "MyClientID";
+    private static readonly string expectedSecret = "MyClientSecret";
 
-    private static List<UserRecord?> users = new()
+    private static readonly List<UserRecord?> users = new()
     {
-        new()
+        new UserRecord
         {
             Id = "1", Name = "Alice", EmailAddress = "alice@example.com",
             Password = "myexternalpassword"
         },
-        new()
+        new UserRecord
         {
             Id = "2", Name = "Dora", EmailAddress = "dora@example.com",
             Password = "myexternalpassword"
         }
     };
 
+    private readonly Dictionary<string, string> data
+        = new()
+        {
+            { "token1", "This is Alice's external data" },
+            { "token2", "This is Dora's external data" }
+        };
+
     public IActionResult Authenticate([FromQuery] ExternalAuthInfo info)
-        => expectedID == info.client_id ? View((info, string.Empty))
+    {
+        return expectedID == info.client_id
+            ? View((info, string.Empty))
             : View((info, "Unknown Client"));
+    }
 
     [HttpPost]
     public IActionResult Authenticate(ExternalAuthInfo info, string email,
@@ -59,15 +70,14 @@ public class DemoExternalAuthController : Controller
             UserRecord? user = users.FirstOrDefault(u => u.EmailAddress.Equals(email) && u.Password.Equals(password));
             if (user != null)
             {
-                 return Redirect(info.redirect_uri
-                                        + $"?code={user.Code}&scope={info.scope}"
-                                        + $"&state={info.state}");
+                return Redirect(info.redirect_uri
+                                + $"?code={user.Code}&scope={info.scope}"
+                                + $"&state={info.state}");
             }
-            else
-            {
-                ModelState.AddModelError("", "Email or password incorrect");
-            }
+
+            ModelState.AddModelError("", "Email or password incorrect");
         }
+
         return View((info, ""));
     }
 
@@ -81,17 +91,15 @@ public class DemoExternalAuthController : Controller
         {
             return Json(new { error = "unauthorized_client" });
         }
-        else
+
+        return Json(new
         {
-            return Json(new
-            {
-                access_token = user.Token,
-                expires_in = 3600,
-                scope = "openid+email+profile",
-                token_type = "Bearer",
-                info.state
-            });
-        }
+            access_token = user.Token,
+            expires_in = 3600,
+            scope = "openid+email+profile",
+            token_type = "Bearer",
+            info.state
+        });
     }
 
     [HttpGet]
@@ -103,9 +111,22 @@ public class DemoExternalAuthController : Controller
         {
             return Json(new { user.Id, user.EmailAddress, user.Name });
         }
-        else
+
+        return Json(new { error = "invalid_token" });
+    }
+
+    [HttpGet]
+    public IActionResult GetData([FromHeader] string authorization)
+    {
+        if (!string.IsNullOrEmpty(authorization))
         {
-            return Json(new { error = "invalid_token" });
+            string token = authorization?[7..];
+            if (!string.IsNullOrEmpty(token) && data.ContainsKey(token))
+            {
+                return Json(new { data = data[token] });
+            }
         }
+
+        return NotFound();
     }
 }

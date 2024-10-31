@@ -90,11 +90,16 @@ public class ExternalAuthHandler : IAuthenticationHandler
                     identity.AddClaims(claims);
                     ClaimsPrincipal claimsPrincipal
                         = new ClaimsPrincipal(identity);
-                    AuthenticationProperties props
-                        = PropertiesFormatter.Unprotect(state);
-                    await Context.SignInAsync(IdentityConstants.ExternalScheme,
-                        claimsPrincipal, props);
-                    Context.Response.Redirect(props.RedirectUri);
+                    AuthenticationProperties authenticationProperties = PropertiesFormatter.Unprotect(state);
+                    
+                    authenticationProperties.StoreTokens(new AuthenticationToken[]{ new AuthenticationToken()
+                    {
+                        Name = "access_token",
+                        Value = token
+                    }});
+
+                    await Context.SignInAsync(IdentityConstants.ExternalScheme, claimsPrincipal, authenticationProperties);
+                    Context.Response.Redirect(authenticationProperties.RedirectUri);
                     return true;
                 }
 
@@ -141,8 +146,12 @@ public class ExternalAuthHandler : IAuthenticationHandler
         return claims;
     }
 
-    protected virtual async Task<(string code, string state)>
-        GetAccessToken(string code)
+    /// <summary>
+    /// Query external authentication provider to get an access token
+    /// </summary>
+    /// <param name="code"></param>
+    /// <returns></returns>
+    protected virtual async Task<(string code, string state)> GetAccessToken(string code)
     {
         string state = Context.Request.Query["state"];
 

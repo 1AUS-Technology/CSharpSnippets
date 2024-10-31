@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdentityExample.CustomSecurity.CustomStore;
 
@@ -28,4 +29,8 @@ public class AppUser
     public bool AuthenticatorEnabled { get; set; }
     public string AuthenticatorKey { get; set; }
     public IList<UserLoginInfo> UserLogins { get; set; }
+
+    // Identity provides the AuthenticationToken class, which defines Name and Value properties.
+    // To store tokens, I need to be able to keep track of the source of each token, 
+    public IList<(string provider, AuthenticationToken token)> AuthTokens { get; set; } = new List<(string provider, AuthenticationToken token)>();
 }
