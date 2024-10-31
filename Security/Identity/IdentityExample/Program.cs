@@ -1,14 +1,11 @@
 using IdentityExample.CustomSecurity;
-using IdentityExample.CustomSecurity.AuthorizationHandlers;
 using IdentityExample.CustomSecurity.AuthorizationPolicies;
 using IdentityExample.CustomSecurity.CustomRoles;
 using IdentityExample.CustomSecurity.CustomStore;
 using IdentityExample.CustomSecurity.Store;
 using IdentityExample.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,12 +23,13 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddSingleton<ILookupNormalizer, UpperInvariantLookupNormalizer>();
 builder.Services.AddSingleton<IUserStore<AppUser>, AppUserStore>();
 builder.Services.AddIdentityCore<AppUser>(options =>
-{
-    options.Tokens.EmailConfirmationTokenProvider = "SimpleEmail";
-    options.Tokens.ChangeEmailTokenProvider = "SimpleEmail";
-})
-.AddTokenProvider<EmailConfirmationTokenGenerator>("SimpleEmail")
-.AddTokenProvider<PhoneConfirmationTokenGenerator>(TokenOptions.DefaultPhoneProvider);
+    {
+        options.Tokens.EmailConfirmationTokenProvider = "SimpleEmail";
+        options.Tokens.ChangeEmailTokenProvider = "SimpleEmail";
+    })
+    .AddTokenProvider<EmailConfirmationTokenGenerator>("SimpleEmail")
+    .AddTokenProvider<PhoneConfirmationTokenGenerator>(TokenOptions.DefaultPhoneProvider)
+    .AddTokenProvider<TwoFactorSignInTokenGenerator>(IdentityConstants.TwoFactorUserIdScheme);
 
 builder.Services.AddSingleton<IPasswordHasher<AppUser>, SimplePasswordHasher>();
 builder.Services.AddSingleton<IRoleStore<AppRole>, AppRoleStore>();
@@ -42,22 +40,23 @@ builder.Services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPr
 
 // Add the custom authentication handler
 builder.Services.AddAuthentication(options =>
-{
-    
-    //options.AddScheme<CutiUsesAuthenticationHandler>(CutiUsesAuthenticationHandler.AuthenticationSchemeName, "Query String Authentication Scheme");
-    //options.DefaultAuthenticateScheme = CutiUsesAuthenticationHandler.AuthenticationSchemeName;
+    {
+        //options.AddScheme<CutiUsesAuthenticationHandler>(CutiUsesAuthenticationHandler.AuthenticationSchemeName, "Query String Authentication Scheme");
+        //options.DefaultAuthenticateScheme = CutiUsesAuthenticationHandler.AuthenticationSchemeName;
 
-    // use the built in cookies authentication scheme
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-})
-.AddCookie(cookiesOptions =>
-{
-    cookiesOptions.LoginPath = "/signin";
-    // defines the URL where clients will be redirected for Forbid responses
-    cookiesOptions.AccessDeniedPath = "/signin/403";
-    cookiesOptions.ExpireTimeSpan = TimeSpan.FromHours(2);
-    cookiesOptions.SlidingExpiration = true;
-});
+        // use the built in cookies authentication scheme
+        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    })
+    .AddCookie(cookiesOptions =>
+    {
+        cookiesOptions.LoginPath = "/signin";
+        // defines the URL where clients will be redirected for Forbid responses
+        cookiesOptions.AccessDeniedPath = "/signin/403";
+        cookiesOptions.ExpireTimeSpan = TimeSpan.FromHours(2);
+        cookiesOptions.SlidingExpiration = true;
+    })
+    .AddCookie(IdentityConstants.TwoFactorUserIdScheme)
+    .AddCookie(IdentityConstants.TwoFactorRememberMeScheme);
 
 builder.Services.AddAuthorization(options => AuthorizationPolicies.AddPolicies(options));
 

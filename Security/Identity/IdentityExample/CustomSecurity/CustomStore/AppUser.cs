@@ -18,4 +18,5 @@ public class AppUser
     public IList<Claim> Claims { get; set; }
     public string SecurityStamp { get; set; }
     public string PasswordHash { get; set; }
+    public bool TwoFactorEnabled { get; set; }
 }
