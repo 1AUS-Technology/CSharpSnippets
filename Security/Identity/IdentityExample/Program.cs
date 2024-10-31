@@ -1,6 +1,8 @@
 using IdentityExample.CustomSecurity;
 using IdentityExample.CustomSecurity.AuthorizationHandlers;
 using IdentityExample.CustomSecurity.AuthorizationPolicies;
+using IdentityExample.CustomSecurity.CustomStore;
+using IdentityExample.CustomSecurity.Store;
 using IdentityExample.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -18,11 +20,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<ILookupNormalizer, UpperInvariantLookupNormalizer>();
+builder.Services.AddSingleton<IUserStore<AppUser>, UserStore>();
+builder.Services.AddIdentityCore<AppUser>();
 
 // Register the authorization handler
-builder.Services.AddTransient<IAuthorizationHandler, CustomRequirementHandler>();
+//builder.Services.AddTransient<IAuthorizationHandler, CustomRequirementHandler>();
 
 // Add the custom authentication handler
 builder.Services.AddAuthentication(options =>
@@ -44,6 +48,8 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization(options => AuthorizationPolicies.AddPolicies(options));
+
+builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -70,9 +76,9 @@ app.UseMiddleware<RoleMembership>();
 
 app.UseRouting();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 //app.UseMiddleware<CustomAuthorization>();
-app.UseMiddleware<AuthorizationReporter>();
+//app.UseMiddleware<AuthorizationReporter>();
 app.UseMiddleware<ClaimsReporter>();
 
 app.UseEndpoints(endpoints => { _ = endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World"); }); });
