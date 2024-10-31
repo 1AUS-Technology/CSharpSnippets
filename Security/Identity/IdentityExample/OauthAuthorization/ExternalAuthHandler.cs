@@ -32,7 +32,7 @@ public class ExternalAuthOptions
 public class ExternalAuthHandler : IAuthenticationHandler
 {
     private readonly IDataProtectionProvider _dataProtectionProvider;
-    private readonly ILogger<ExternalAuthHandler> _logger;
+    protected readonly ILogger<ExternalAuthHandler> _logger;
 
     public ExternalAuthHandler(IOptions<ExternalAuthOptions> optionMonitor, IDataProtectionProvider dataProtectionProvider,
         ILogger<ExternalAuthHandler> logger)
@@ -190,7 +190,7 @@ public class ExternalAuthHandler : IAuthenticationHandler
         return Task.FromResult(Context.Request.Query["code"].ToString());
     }
 
-    private Task<string> GetAuthenticationUrl(AuthenticationProperties properties)
+    protected virtual Task<string> GetAuthenticationUrl(AuthenticationProperties properties)
     {
         Dictionary<string, string> qs = new Dictionary<string, string>
         {

@@ -5,6 +5,7 @@ using IdentityExample.CustomSecurity.CustomStore;
 using IdentityExample.CustomSecurity.ExternalAuthentication;
 using IdentityExample.CustomSecurity.Store;
 using IdentityExample.Data;
+using IdentityExample.GoogleAuthentication;
 using IdentityExample.OauthAuthorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -49,6 +50,7 @@ builder.Services.AddAuthentication(options =>
         // use the built in cookies authentication scheme
         options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.AddScheme<ExternalAuthenticationHandler>(Constants.DemoAuthenticationScheme, "Demo Service");
+        options.AddScheme<GoogleHandler>(Constants.GoogleAuthenticationScheme, "Google");
     })
     .AddCookie(cookiesOptions =>
     {
@@ -63,6 +65,12 @@ builder.Services.AddAuthentication(options =>
     .AddCookie(IdentityConstants.ExternalScheme);
 
 builder.Services.AddOptions<ExternalAuthOptions>();
+builder.Services.Configure<GoogleOptions>(options =>
+{
+    options.ClientId = "<ConfigureClientID>";
+    options.ClientSecret = "<RegisteredSecret>";
+});
+
 builder.Services.AddAuthorization(options => AuthorizationPolicies.AddPolicies(options));
 
 builder.Services.AddControllersWithViews();
