@@ -1,12 +1,14 @@
 using IdentityExample.CustomSecurity;
 using IdentityExample.CustomSecurity.AuthorizationHandlers;
 using IdentityExample.CustomSecurity.AuthorizationPolicies;
+using IdentityExample.CustomSecurity.CustomRoles;
 using IdentityExample.CustomSecurity.CustomStore;
 using IdentityExample.CustomSecurity.Store;
 using IdentityExample.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,9 @@ builder.Services.AddIdentityCore<AppUser>(options =>
 .AddTokenProvider<PhoneConfirmationTokenGenerator>(TokenOptions.DefaultPhoneProvider);
 
 builder.Services.AddSingleton<IPasswordHasher<AppUser>, SimplePasswordHasher>();
+builder.Services.AddSingleton<IRoleStore<AppRole>, AppRoleStore>();
+builder.Services.AddSingleton<IRoleValidator<AppRole>, AppRoleValidator>();
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
 // Register the authorization handler
 //builder.Services.AddTransient<IAuthorizationHandler, CustomRequirementHandler>();
 
