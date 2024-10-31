@@ -5,6 +5,7 @@ using IdentityExample.CustomSecurity.CustomStore;
 using IdentityExample.CustomSecurity.ExternalAuthentication;
 using IdentityExample.CustomSecurity.Store;
 using IdentityExample.Data;
+using IdentityExample.OauthAuthorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -61,6 +62,7 @@ builder.Services.AddAuthentication(options =>
     .AddCookie(IdentityConstants.TwoFactorRememberMeScheme)
     .AddCookie(IdentityConstants.ExternalScheme);
 
+builder.Services.AddOptions<ExternalAuthOptions>();
 builder.Services.AddAuthorization(options => AuthorizationPolicies.AddPolicies(options));
 
 builder.Services.AddControllersWithViews();
