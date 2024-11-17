@@ -20,7 +20,7 @@ public class ArrayPoolRunner
 
     }
 
-    private static void ShowCars(IReadOnlyCollection<Car> cars)
+    private static void ShowCars(IEnumerable<Car> cars)
     {
         foreach (var car in cars)
         {
