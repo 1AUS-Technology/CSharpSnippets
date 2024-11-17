@@ -13,7 +13,8 @@ namespace CsharpRecap
 
             //ZooShower.Show();
             //RegularExpressionRunner.Run();
-            FileRunner.Run();
+            //FileRunner.Run();
+            ZoneRunner.Run();
             Console.ReadLine();
         }
     }
