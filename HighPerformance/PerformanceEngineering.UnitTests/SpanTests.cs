@@ -81,6 +81,42 @@ public sealed class SpanTests
                                                 });
     }
 
+    [TestMethod]
+    public void TestSpanIteration()
+    {
+        Span<int> constWriteable = stackalloc int[] { 1, 2, 3 };
+
+        var result = IterateThroughSpan(constWriteable);
+        Assert.AreEqual(6, result);
+    }
+
+    [TestMethod]
+    public void TestPatternMatchingWithSpan()
+    {
+        ReadOnlySpan<char> hv = "Hong Victoria";
+
+        CheckStart(hv);
+    }
+
+    private static void CheckStart(ReadOnlySpan<char> chars)
+    {
+        if (chars is ['H', .. var theRest])
+        {
+            Console.WriteLine("Chars start with 'H' and the rest length is " + theRest.Length);
+        }
+    }
+
+    public int IterateThroughSpan(ReadOnlySpan<int> intSpan)
+    {
+        var sum = 0;
+        for (int i = 0; i < intSpan.Length; i++)
+        {
+            sum += intSpan[i];
+        }
+
+        return sum;
+    }
+
     private struct MutableStruct
     {
         public int Value { get; set; }
