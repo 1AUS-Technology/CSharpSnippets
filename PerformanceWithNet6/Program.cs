@@ -8,8 +8,8 @@ namespace PerformanceWithNet6
     {
         static void Main(string[] args)
         {
-            BenchmarkRunner.Run<UsingDynamicType>();
-            BenchmarkRunner.Run<Md5vsSha256>();
+            //BenchmarkRunner.Run<UsingDynamicType>();
+            BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
         }
     }
 }

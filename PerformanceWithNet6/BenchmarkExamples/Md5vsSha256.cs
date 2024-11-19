@@ -1,9 +1,12 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Engines;
 using System.Security.Cryptography;
 
 namespace PerformanceWithNet6.BenchmarkExamples
 {
-    internal class Md5vsSha256
+    [SimpleJob(RunStrategy.ColdStart, launchCount: 1, warmupCount: 10, iterationCount: 10)]
+    [MinColumn, MaxColumn, MeanColumn, MedianColumn]
+    public class Md5vsSha256
     {
         private const int N = 10000;
         private readonly byte[] data;
