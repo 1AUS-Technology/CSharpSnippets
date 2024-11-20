@@ -2,6 +2,8 @@
 
 namespace PerformanceWithNet6.MemoryAllocation;
 
+[DisassemblyDiagnoser(maxDepth: 0)]
+[HideColumns("Job", "Error", "StdDev", "Median", "RatioSD")]
 public class UsingDynamicType
 {
     dynamic _dynamicType;

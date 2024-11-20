@@ -1,6 +1,4 @@
 ﻿using BenchmarkDotNet.Running;
-using PerformanceWithNet6.BenchmarkExamples;
-using PerformanceWithNet6.MemoryAllocation;
 
 namespace PerformanceWithNet6
 {
